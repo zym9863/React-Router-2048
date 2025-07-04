@@ -1,3 +1,5 @@
+[English](README_EN.md) | [中文](README.md)
+
 # 2048 游戏 - React Router V7 版本
 
 一个使用 React Router V7 构建的经典 2048 数字拼图游戏。
