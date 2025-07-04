@@ -14,19 +14,19 @@ function Tile({ value, position }: TileProps) {
   
   const getTileColor = (value: number) => {
     const colors: { [key: number]: string } = {
-      2: 'bg-gray-100 text-gray-800',
-      4: 'bg-gray-200 text-gray-800',
-      8: 'bg-orange-200 text-white',
-      16: 'bg-orange-300 text-white',
-      32: 'bg-orange-400 text-white',
-      64: 'bg-orange-500 text-white',
-      128: 'bg-yellow-300 text-white',
-      256: 'bg-yellow-400 text-white',
-      512: 'bg-yellow-500 text-white',
-      1024: 'bg-yellow-600 text-white',
-      2048: 'bg-yellow-700 text-white',
+      2: 'bg-gradient-to-br from-slate-100 to-slate-200 text-slate-700 shadow-md',
+      4: 'bg-gradient-to-br from-slate-200 to-slate-300 text-slate-700 shadow-md',
+      8: 'bg-gradient-to-br from-orange-300 to-orange-400 text-white shadow-lg',
+      16: 'bg-gradient-to-br from-orange-400 to-orange-500 text-white shadow-lg',
+      32: 'bg-gradient-to-br from-red-400 to-red-500 text-white shadow-lg',
+      64: 'bg-gradient-to-br from-red-500 to-red-600 text-white shadow-xl',
+      128: 'bg-gradient-to-br from-yellow-400 to-yellow-500 text-white shadow-xl',
+      256: 'bg-gradient-to-br from-yellow-500 to-amber-500 text-white shadow-xl',
+      512: 'bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-2xl',
+      1024: 'bg-gradient-to-br from-emerald-400 to-emerald-600 text-white shadow-2xl',
+      2048: 'bg-gradient-to-br from-purple-500 to-purple-700 text-white shadow-2xl animate-pulse',
     };
-    return colors[value] || 'bg-red-500 text-white';
+    return colors[value] || 'bg-gradient-to-br from-pink-500 to-rose-600 text-white shadow-2xl animate-bounce';
   };
   
   const getFontSize = (value: number) => {
@@ -38,10 +38,10 @@ function Tile({ value, position }: TileProps) {
   return (
     <div
       className={`
-        absolute w-16 h-16 rounded-lg flex items-center justify-center
-        font-bold transition-all duration-200 ease-in-out
+        absolute w-16 h-16 rounded-xl flex items-center justify-center
+        font-bold transition-all duration-300 ease-out transform
         ${getTileColor(value)} ${getFontSize(value)}
-        shadow-md
+        hover:scale-105 border border-white/20
       `}
       style={{
         top: `${position.row * 72 + 8}px`,
@@ -59,13 +59,13 @@ interface BoardProps {
 
 function Board({ board }: BoardProps) {
   return (
-    <div className="relative bg-gray-300 rounded-lg p-2 w-80 h-80 mx-auto">
+    <div className="relative bg-gradient-to-br from-slate-600 via-slate-500 to-slate-600 rounded-2xl p-3 w-80 h-80 mx-auto shadow-2xl border border-slate-400/30">
       {/* 背景格子 */}
       {Array(4).fill(null).map((_, row) =>
         Array(4).fill(null).map((_, col) => (
           <div
             key={`${row}-${col}`}
-            className="absolute w-16 h-16 bg-gray-200 rounded-md"
+            className="absolute w-16 h-16 bg-slate-400/30 rounded-lg backdrop-blur-sm border border-slate-300/20"
             style={{
               top: `${row * 72 + 8}px`,
               left: `${col * 72 + 8}px`,
@@ -100,23 +100,26 @@ function GameOverModal({ isVisible, hasWon, score, onRestart, onContinue }: Game
   if (!isVisible) return null;
   
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-8 text-center max-w-sm mx-4">
-        <h2 className={`text-3xl font-bold mb-4 ${hasWon ? 'text-green-600' : 'text-red-600'}`}>
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 animate-in fade-in duration-300">
+      <div className="bg-white/95 backdrop-blur-lg rounded-2xl p-8 text-center max-w-sm mx-4 shadow-2xl border border-white/20 animate-in zoom-in duration-300">
+        <div className={`text-6xl mb-4 ${hasWon ? '🎉' : '😔'}`}>
+          {hasWon ? '🎉' : '😔'}
+        </div>
+        <h2 className={`text-3xl font-bold mb-4 ${hasWon ? 'text-emerald-600' : 'text-red-500'}`}>
           {hasWon ? '恭喜！你赢了！' : '游戏结束'}
         </h2>
-        <p className="text-xl mb-6">最终得分: {score}</p>
+        <p className="text-xl mb-6 text-slate-700">最终得分: <span className="font-bold text-blue-600">{score}</span></p>
         <div className="space-y-3">
           <button
             onClick={onRestart}
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+            className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           >
             重新开始
           </button>
           {hasWon && onContinue && (
             <button
               onClick={onContinue}
-              className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+              className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
               继续游戏
             </button>
@@ -187,37 +190,39 @@ export default function Game2048() {
   }, [gameState.gameOver, gameState.hasWon, showModal]);
   
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-purple-100">
       <Navigation />
       <div className="py-8">
         <div className="max-w-md mx-auto">
           {/* 标题和得分 */}
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-800 mb-4">2048</h1>
-            <div className="flex justify-between items-center mb-4">
-              <div className="bg-gray-200 rounded-lg px-4 py-2">
-                <div className="text-sm text-gray-600">得分</div>
-                <div className="text-xl font-bold">{gameState.score}</div>
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6 drop-shadow-sm">2048</h1>
+            <div className="flex justify-between items-center mb-6 gap-4">
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-6 py-3 shadow-lg border border-white/50 flex-1">
+                <div className="text-sm text-slate-600 font-medium">得分</div>
+                <div className="text-2xl font-bold text-slate-800">{gameState.score}</div>
               </div>
-              <div className="bg-yellow-200 rounded-lg px-4 py-2">
-                <div className="text-sm text-gray-600">最佳</div>
-                <div className="text-xl font-bold">{bestScore}</div>
-              </div>
-              <div className="space-x-2">
-                <button
-                  onClick={handleRestart}
-                  className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-lg transition-colors text-sm"
-                >
-                  重新开始
-                </button>
+              <div className="bg-gradient-to-r from-yellow-400 to-orange-400 rounded-2xl px-6 py-3 shadow-lg flex-1">
+                <div className="text-sm text-white/90 font-medium">最佳</div>
+                <div className="text-2xl font-bold text-white">{bestScore}</div>
               </div>
             </div>
+            <button
+              onClick={handleRestart}
+              className="bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            >
+              🔄 重新开始
+            </button>
           </div>
           
           {/* 游戏说明 */}
-          <div className="text-center mb-6 text-sm text-gray-600">
-            <p>使用方向键移动瓷砖。当两个相同数字的瓷砖碰撞时，它们会合并为一个！</p>
-            <p className="mt-1">目标：达到 <strong>2048</strong> 瓷砖！</p>
+          <div className="text-center mb-8 bg-white/70 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-white/50">
+            <p className="text-sm text-slate-700 leading-relaxed">
+              使用方向键移动瓷砖。当两个相同数字的瓷砖碰撞时，它们会合并为一个！
+            </p>
+            <p className="mt-2 text-sm font-semibold">
+              目标：达到 <span className="bg-gradient-to-r from-purple-500 to-purple-700 bg-clip-text text-transparent font-bold">2048</span> 瓷砖！
+            </p>
           </div>
           
           {/* 游戏板 */}
@@ -225,32 +230,32 @@ export default function Game2048() {
           
           {/* 移动端控制按钮 */}
           <div className="mt-8 md:hidden">
-            <div className="grid grid-cols-3 gap-2 max-w-48 mx-auto">
+            <div className="grid grid-cols-3 gap-3 max-w-48 mx-auto">
               <div></div>
               <button
                 onClick={() => handleMove('ArrowUp')}
-                className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded-lg transition-colors"
+                className="bg-gradient-to-br from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white font-bold py-4 px-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-xl"
               >
                 ↑
               </button>
               <div></div>
               <button
                 onClick={() => handleMove('ArrowLeft')}
-                className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded-lg transition-colors"
+                className="bg-gradient-to-br from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white font-bold py-4 px-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-xl"
               >
                 ←
               </button>
               <div></div>
               <button
                 onClick={() => handleMove('ArrowRight')}
-                className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded-lg transition-colors"
+                className="bg-gradient-to-br from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white font-bold py-4 px-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-xl"
               >
                 →
               </button>
               <div></div>
               <button
                 onClick={() => handleMove('ArrowDown')}
-                className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded-lg transition-colors"
+                className="bg-gradient-to-br from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white font-bold py-4 px-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-xl"
               >
                 ↓
               </button>
@@ -259,8 +264,10 @@ export default function Game2048() {
           </div>
           
           {/* 键盘说明 */}
-          <div className="text-center mt-6 text-xs text-gray-500">
-            <p>使用方向键或上方按钮来移动瓷砖</p>
+          <div className="text-center mt-6 bg-white/50 backdrop-blur-sm rounded-xl p-3 shadow-md">
+            <p className="text-xs text-slate-600">
+              💡 使用方向键或上方按钮来移动瓷砖
+            </p>
           </div>
         </div>
       </div>
