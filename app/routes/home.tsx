@@ -1,13 +1,13 @@
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import Game2048 from "../components/Game2048";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "2048 游戏 - React Router V7" },
+    { name: "description", content: "经典的2048数字拼图游戏，使用React Router V7构建" },
   ];
 }
 
 export default function Home() {
-  return <Welcome />;
+  return <Game2048 />;
 }

@@ -1,87 +1,105 @@
-# Welcome to React Router!
+# 2048 游戏 - React Router V7 版本
 
-A modern, production-ready template for building full-stack React applications using React Router.
+一个使用 React Router V7 构建的经典 2048 数字拼图游戏。
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+## 🎮 游戏特性
 
-## Features
+- **经典2048游戏玩法**：使用方向键移动瓷砖，合并相同数字
+- **响应式设计**：支持桌面和移动设备
+- **本地存储**：自动保存游戏进度和最佳分数
+- **现代UI**：使用 Tailwind CSS 构建的美观界面
+- **流畅动画**：平滑的瓷砖移动和合并效果
+- **多页面应用**：包含游戏页面、说明页面和关于页面
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+## 🛠️ 技术栈
 
-## Getting Started
+- **React Router V7**：现代的React路由解决方案
+- **TypeScript**：类型安全的JavaScript
+- **Tailwind CSS**：实用优先的CSS框架
+- **Vite**：快速的构建工具
+- **pnpm**：高效的包管理器
 
-### Installation
+## 🚀 开始使用
 
-Install the dependencies:
-
-```bash
-npm install
-```
-
-### Development
-
-Start the development server with HMR:
+### 安装依赖
 
 ```bash
-npm run dev
+pnpm install
 ```
 
-Your application will be available at `http://localhost:5173`.
-
-## Building for Production
-
-Create a production build:
+### 启动开发服务器
 
 ```bash
-npm run build
+pnpm dev
 ```
 
-## Deployment
+访问 [http://localhost:5173](http://localhost:5173) 开始游戏！
 
-### Docker Deployment
-
-To build and run using Docker:
+### 构建生产版本
 
 ```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
+pnpm build
 ```
 
-The containerized application can be deployed to any platform that supports Docker, including:
+### 启动生产服务器
 
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
+```bash
+pnpm start
 ```
 
-## Styling
+## 🎯 游戏玩法
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+1. **移动瓷砖**：使用方向键（↑↓←→）或者在移动设备上使用屏幕上的按钮
+2. **合并瓷砖**：当两个相同数字的瓷砖碰撞时，它们会合并成一个数字加倍的瓷砖
+3. **新瓷砖生成**：每次移动后，会在空白位置随机出现一个新的瓷砖（2或4）
+4. **获胜条件**：创建一个标有"2048"的瓷砖即可获胜
+5. **失败条件**：当网格填满且无法进行有效移动时，游戏结束
+
+## 📱 功能亮点
+
+- **自动保存**：游戏状态会自动保存到本地存储
+- **最佳分数跟踪**：记录并显示历史最高分数
+- **触摸支持**：移动设备上的虚拟按钮控制
+- **键盘快捷键**：使用方向键快速游戏
+- **游戏重置**：随时可以重新开始游戏
+
+## 🔧 项目结构
+
+```
+app/
+├── components/          # React 组件
+│   ├── Game2048.tsx    # 主游戏组件
+│   └── Navigation.tsx  # 导航组件
+├── lib/                # 核心逻辑
+│   ├── game2048.ts     # 游戏逻辑
+│   └── storage.ts      # 本地存储管理
+├── routes/             # 页面路由
+│   ├── home.tsx        # 游戏主页
+│   ├── instructions.tsx # 游戏说明
+│   └── about.tsx       # 关于页面
+├── styles/             # 样式文件
+│   └── game2048.css    # 游戏专用样式
+├── app.css             # 全局样式
+├── root.tsx            # 根组件
+└── routes.ts           # 路由配置
+```
+
+## 🎨 样式定制
+
+游戏使用 Tailwind CSS 进行样式设计，你可以轻松地：
+
+- 修改瓷砖颜色：编辑 `app/styles/game2048.css` 中的颜色定义
+- 调整布局：修改组件中的 Tailwind 类名
+- 添加动画：使用 CSS 动画增强用户体验
+
+## 📄 许可证
+
+本项目基于 MIT 许可证开源。
+
+## 🤝 贡献
+
+欢迎提交 Issues 和 Pull Requests 来改进这个项目！
 
 ---
 
-Built with ❤️ using React Router.
+享受游戏吧！🎉

@@ -1,0 +1,137 @@
+/* 2048游戏的自定义样式和动画 */
+
+.tile-appear {
+  animation: tile-appear 0.3s ease-in-out;
+}
+
+.tile-merge {
+  animation: tile-merge 0.15s ease-in-out;
+}
+
+.tile-move {
+  transition: all 0.15s ease-in-out;
+}
+
+@keyframes tile-appear {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes tile-merge {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.board-grid {
+  position: relative;
+  background: #bbada0;
+  border-radius: 10px;
+  padding: 10px;
+  width: 320px;
+  height: 320px;
+  margin: 0 auto;
+}
+
+.grid-cell {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background: rgba(238, 228, 218, 0.35);
+  border-radius: 6px;
+}
+
+.tile {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  z-index: 10;
+  transition: all 0.15s ease-in-out;
+}
+
+/* 不同数值的瓷砖颜色 */
+.tile-2 { background: #eee4da; color: #776e65; }
+.tile-4 { background: #ede0c8; color: #776e65; }
+.tile-8 { background: #f2b179; color: #f9f6f2; }
+.tile-16 { background: #f59563; color: #f9f6f2; }
+.tile-32 { background: #f67c5f; color: #f9f6f2; }
+.tile-64 { background: #f65e3b; color: #f9f6f2; }
+.tile-128 { background: #edcf72; color: #f9f6f2; font-size: 35px; }
+.tile-256 { background: #edcc61; color: #f9f6f2; font-size: 35px; }
+.tile-512 { background: #edc850; color: #f9f6f2; font-size: 35px; }
+.tile-1024 { background: #edc53f; color: #f9f6f2; font-size: 30px; }
+.tile-2048 { background: #edc22e; color: #f9f6f2; font-size: 30px; }
+.tile-super { background: #3c3a32; color: #f9f6f2; font-size: 25px; }
+
+/* 移动端适配 */
+@media (max-width: 640px) {
+  .board-grid {
+    width: 280px;
+    height: 280px;
+    padding: 8px;
+  }
+  
+  .grid-cell,
+  .tile {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .tile-128,
+  .tile-256,
+  .tile-512 {
+    font-size: 28px;
+  }
+  
+  .tile-1024,
+  .tile-2048 {
+    font-size: 24px;
+  }
+  
+  .tile-super {
+    font-size: 20px;
+  }
+}
+
+/* 游戏结束覆盖层 */
+.game-over-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  z-index: 100;
+}
+
+/* 按钮悬停效果 */
+.button-hover {
+  transition: all 0.2s ease-in-out;
+}
+
+.button-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
